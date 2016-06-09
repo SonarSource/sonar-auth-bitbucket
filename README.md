@@ -31,8 +31,8 @@ This plugin enables user authentication and Single Sign-On via [Bitbucket](https
 Property | Description | Default value
 ---------| ----------- | -------------
 sonar.auth.bitbucket.allowUsersToSignUp|Allow new users to authenticate. When set to 'false', only existing users will be able to authenticate to the server|true
-sonar.auth.bitbucket.clientId|Consumer Key provided by Bitbucket when registering the consumer|None
-sonar.auth.bitbucket.clientSecret|Consumer password provided by Bitbucket when registering the consumer|None
+sonar.auth.bitbucket.clientId.secured|Consumer Key provided by Bitbucket when registering the consumer|None
+sonar.auth.bitbucket.clientSecret.secured|Consumer password provided by Bitbucket when registering the consumer|None
 sonar.auth.bitbucket.enabled|Enable Bitbucket users to login. Value is ignored if consumer Key and Secret are not defined|false
 sonar.auth.bitbucket.loginStrategy|When the login strategy is set to 'Unique', the user's login will be auto-generated the first time so that it is unique. When the login strategy is set to 'Same as Bitbucket login', the user's login will be the Bitbucket login. This last strategy allows, when changing the authentication provider, to keep existing users (if logins from new provider are the same than Bitbucket)|Unique
 
