@@ -1,4 +1,4 @@
-# Bitbucket Authentication Plug-in for SonarQube #
+# Bitbucket Authentication Plugin for SonarQube #
 [![Build Status](https://api.travis-ci.org/SonarQubeCommunity/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarQubeCommunity/sonar-auth-bitbucket)
 
 ## Description ##
