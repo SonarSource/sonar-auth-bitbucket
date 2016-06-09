@@ -8,15 +8,15 @@ This plugin enables user authentication and Single Sign-On via [Bitbucket](https
 1. Install the plugin through the [Update Center](http://docs.sonarqube.org/display/SONAR/Update+Center) or [download](https://github.com/SonarQubeCommunity/sonar-auth-bitbucket/releases) it into the *SONARQUBE_HOME/extensions/plugins* directory
 1. Restart the SonarQube server
 
-## Usage ##
+## Configuration ##
 1. In Bitbucket, create a Developer application :
   1. Go to "Add-ons" -> "OAuth" -> "Add consumer"
   2. Name : Something like "My Company SonarQube"
   3. URL : SonarQube URL
   4. Callback URL : <SonarQube URL>/oauth2/callback
   5. Permissions : Check Account -> Read (Email will automatically be selected)
-2. In SonarQube settings :
-  1. Go to "Security" -> "Bitbucket"
+2. In SonarQube :
+  1. Go to "Administration" -> "Configuration" -> "General Settings" -> "Security" -> "Bitbucket"
   2. Set the "Enabled" property to true
   3. Set the "OAuth consumer Key" from the value provided by the Bitbucket OAuth consumer
   4. Set the "OAuth consumer Secret" from the value provided by the Bitbucket OAuth consumer
