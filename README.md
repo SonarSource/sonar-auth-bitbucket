@@ -12,7 +12,7 @@ If you want to analyse Bitbucket Pull Requests you should use [this](https://git
   1. Go to "Add-ons" -> "OAuth" -> "Add consumer"
   2. Name : Something like "My Company SonarQube"
   3. URL : SonarQube URL
-  4. Callback URL : <SonarQube URL>/oauth2/callback
+  4. Callback URL : SonarQube_URL/oauth2/callback
   5. Permissions : Check Account -> Read (Email will automatically be selected)
 2. In SonarQube :
   1. Go to "Administration" -> "Configuration" -> "General Settings" -> "Security" -> "Bitbucket"
