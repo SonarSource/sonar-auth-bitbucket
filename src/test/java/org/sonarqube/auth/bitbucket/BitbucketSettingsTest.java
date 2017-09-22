@@ -99,6 +99,15 @@ public class BitbucketSettingsTest {
   }
 
   @Test
+  public void configure_api_Url() throws Exception {
+    final String configuredApiUrl = "https://test-company.api.bitbucket.org/";
+
+    settings.setProperty("sonar.auth.bitbucket.apiUrl", configuredApiUrl);
+
+    assertThat(underTest.apiURL()).isEqualTo(configuredApiUrl);
+  }
+
+  @Test
   public void default_apiUrl() {
     assertThat(underTest.apiURL()).isEqualTo("https://api.bitbucket.org/");
   }
@@ -110,7 +119,7 @@ public class BitbucketSettingsTest {
 
   @Test
   public void definitions() {
-    assertThat(BitbucketSettings.definitions()).hasSize(5);
+    assertThat(BitbucketSettings.definitions()).hasSize(6);
   }
 
 }

@@ -29,7 +29,7 @@ public class AuthBitbucketPluginTest {
 
   @Test
   public void test_extensions() {
-    assertThat(underTest.getExtensions()).hasSize(9);
+    assertThat(underTest.getExtensions()).hasSize(10);
   }
 
 }
