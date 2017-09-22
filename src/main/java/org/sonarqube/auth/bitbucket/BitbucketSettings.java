@@ -22,6 +22,7 @@ package org.sonarqube.auth.bitbucket;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.CheckForNull;
+
 import org.sonar.api.PropertyType;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.config.Settings;
@@ -37,9 +38,10 @@ public class BitbucketSettings {
   public static final String CONSUMER_SECRET = "sonar.auth.bitbucket.clientSecret.secured";
   public static final String ENABLED = "sonar.auth.bitbucket.enabled";
   public static final String ALLOW_USERS_TO_SIGN_UP = "sonar.auth.bitbucket.allowUsersToSignUp";
-  // URLs are not configurable yet
   public static final String API_URL = "sonar.auth.bitbucket.apiUrl";
   public static final String DEFAULT_API_URL = "https://api.bitbucket.org/";
+
+  // URLs are not configurable yet
   public static final String WEB_URL = "sonar.auth.bitbucket.webUrl";
   public static final String DEFAULT_WEB_URL = "https://bitbucket.org/";
   public static final String LOGIN_STRATEGY = "sonar.auth.bitbucket.loginStrategy";
@@ -133,7 +135,7 @@ public class BitbucketSettings {
         .subCategory(SUBCATEGORY)
         .type(PropertyType.BOOLEAN)
         .defaultValue(String.valueOf(true))
-        .index(4)
+        .index(index++)
         .build(),
       PropertyDefinition.builder(LOGIN_STRATEGY)
         .name("Login generation strategy")
@@ -146,7 +148,15 @@ public class BitbucketSettings {
         .defaultValue(LOGIN_STRATEGY_DEFAULT_VALUE)
         .options(LOGIN_STRATEGY_UNIQUE, LOGIN_STRATEGY_PROVIDER_LOGIN)
         .index(index++)
-        .build()
-      );
+        .build(),
+      PropertyDefinition.builder(API_URL)
+        .name("Bitbucket Api url")
+        .description("Configurable Bit bucket url.")
+        .category(CATEGORY)
+        .subCategory(SUBCATEGORY)
+        .defaultValue(DEFAULT_API_URL)
+        .index(index)
+        .build());
   }
+
 }

@@ -34,6 +34,7 @@ sonar.auth.bitbucket.clientId.secured|Consumer Key provided by Bitbucket when re
 sonar.auth.bitbucket.clientSecret.secured|Consumer password provided by Bitbucket when registering the consumer|None
 sonar.auth.bitbucket.enabled|Enable Bitbucket users to login. Value is ignored if consumer Key and Secret are not defined|false
 sonar.auth.bitbucket.loginStrategy|When the login strategy is set to 'Unique', the user's login will be auto-generated the first time so that it is unique. When the login strategy is set to 'Same as Bitbucket login', the user's login will be the Bitbucket login. This last strategy allows, when changing the authentication provider, to keep existing users (if logins from new provider are the same than Bitbucket)|Unique
+sonar.auth.bitbucket.apiUrl|Allows configurable bitbucket api url for pointing it to your bitbucket server. This will allow users & credentials to be reused from configured bitbucket|https://api.bitbucket.org// 
 
 # Have question or feedback?
 To provide feedback (request a feature, report a bug etc.) use the [SonarQube Google Group](https://groups.google.com/forum/#!forum/sonarqube). Please do not forget to specify plugin and SonarQube versions if it relates to a bug.
