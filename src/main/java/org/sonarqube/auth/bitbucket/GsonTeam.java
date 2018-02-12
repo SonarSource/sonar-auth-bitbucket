@@ -19,17 +19,42 @@
  */
 package org.sonarqube.auth.bitbucket;
 
-import org.junit.Test;
+import com.google.gson.annotations.SerializedName;
+import javax.annotation.Nullable;
 
-import static org.assertj.core.api.Assertions.assertThat;
+/**
+ * Rapresent a single Team information. It's a lite version
+ */
+public class GsonTeam {
 
-public class AuthBitbucketPluginTest {
+    @SerializedName("username")
+    private String userName;
 
-  AuthBitbucketPlugin underTest = new AuthBitbucketPlugin();
+    @SerializedName("display_name")
+    private String displayName;
 
-  @Test
-  public void test_extensions() {
-    assertThat(underTest.getExtensions()).hasSize(11);
-  }
+    public GsonTeam() {
+        // even if empty constructor is not required for Gson, it is strongly
+        // recommended:
+        // http://stackoverflow.com/a/18645370/229031
+    }
 
+    GsonTeam(String username, @Nullable  String displayName) {
+        this.userName = username;
+        this.displayName = displayName;
+    }
+
+    /**
+     * @return the userName
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * @return the displayName
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
 }

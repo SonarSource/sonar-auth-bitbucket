@@ -38,6 +38,7 @@ public class BitbucketSettings {
   public static final String CONSUMER_SECRET = "sonar.auth.bitbucket.clientSecret.secured";
   public static final String ENABLED = "sonar.auth.bitbucket.enabled";
   public static final String ALLOW_USERS_TO_SIGN_UP = "sonar.auth.bitbucket.allowUsersToSignUp";
+  public static final String TEAM_RESTRICTION = "sonar.auth.bitbucket.teamRestriction";
   public static final String API_URL = "sonar.auth.bitbucket.apiUrl";
   public static final String DEFAULT_API_URL = "https://api.bitbucket.org/";
 
@@ -73,6 +74,10 @@ public class BitbucketSettings {
 
   public boolean allowUsersToSignUp() {
     return settings.getBoolean(ALLOW_USERS_TO_SIGN_UP);
+  }
+
+  public String[] teamRestriction() {
+    return settings.getStringArray(TEAM_RESTRICTION);
   }
 
   public String loginStrategy() {
@@ -135,6 +140,13 @@ public class BitbucketSettings {
         .subCategory(SUBCATEGORY)
         .type(PropertyType.BOOLEAN)
         .defaultValue(String.valueOf(true))
+        .index(index++)
+        .build(),
+      PropertyDefinition.builder(TEAM_RESTRICTION)
+        .name("Restrict sign-up to the follow teams:")
+        .description("Allow sign-up only to the follow teams (leave the field empty for not apply any restriction or put one or more team separate by ',')")
+        .category(CATEGORY)
+        .subCategory(SUBCATEGORY)
         .index(index++)
         .build(),
       PropertyDefinition.builder(LOGIN_STRATEGY)
