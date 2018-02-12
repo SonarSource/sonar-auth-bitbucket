@@ -11,7 +11,7 @@ If you want to analyse Bitbucket Pull Requests you should use [this](https://git
 Plugin | Requires SonarQube | Features
 ------ | ------------------ | --------
  1.0   | 6.7 or greater     | Authentication, Single Sign-On
- 1.1   | 7.2 or greater     | Support of Bitbucket Enterprise, account renaming
+ 1.1   | 7.2 or greater     | Support of Bitbucket Enterprise, team restriction, account renaming
 
 ## Installation ##
 1. Install the plugin through the [Marketplace](https://docs.sonarqube.org/display/SONAR/Marketplace) or [download](https://github.com/SonarSource/sonar-auth-bitbucket/releases) it into the *SONARQUBE_HOME/extensions/plugins* directory
@@ -46,7 +46,8 @@ Enabled|Enable Bitbucket users to login. Value is ignored if consumer Key and Se
 Allow users to sign-up|Allow new users to authenticate. When set to 'false', only existing users will be able to authenticate.|true
 OAuth consumer Key|Consumer Key provided by Bitbucket when registering the consumer|None
 OAuth consumer Secret|Consumer password provided by Bitbucket when registering the consumer|None
-Bitbucket API URL|Base URL of the Bitbucket server. Used to connect to Bitbucket Enterprise.|https://api.bitbucket.org 
+Bitbucket API URL|Base URL of the Bitbucket server. Used to connect to Bitbucket Enterprise.|https://api.bitbucket.org
+Teams|Users must be members of at least one team in order to be able to authenticate.|None (team restriction is disabled) 
 Login generation strategy|When the login strategy is set to 'Unique', the user's login will be auto-generated the first time so that it is unique. When the login strategy is set to 'Same as Bitbucket login', the user's login will be the Bitbucket login. This last strategy allows, when changing the authentication provider, to keep existing users (if logins from new provider are the same than Bitbucket)|Unique
 
 # Have question or feedback?

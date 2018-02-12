@@ -121,7 +121,7 @@ public class BitbucketSettingsTest {
 
   @Test
   public void definitions() {
-    assertThat(BitbucketSettings.definitions()).hasSize(6);
+    assertThat(BitbucketSettings.definitions()).hasSize(7);
   }
 
 }
