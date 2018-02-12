@@ -19,17 +19,29 @@
  */
 package org.sonarqube.auth.bitbucket;
 
-import org.junit.Test;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
-import static org.assertj.core.api.Assertions.assertThat;
+/**
+ * Lite representation of JSON response of GET https://api.bitbucket.org/2.0/teams
+ */
+public class GsonTeams {
 
-public class AuthBitbucketPluginTest {
+    @SerializedName("values")
+    private List<GsonTeam> teams;
 
-  AuthBitbucketPlugin underTest = new AuthBitbucketPlugin();
 
-  @Test
-  public void test_extensions() {
-    assertThat(underTest.getExtensions()).hasSize(11);
-  }
+    /**
+     * @return the teams
+     */
+    public List<GsonTeam> getTeams() {
+        return teams;
+    }
 
+    public static GsonTeams parse(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, GsonTeams.class);
+    }
+  
 }

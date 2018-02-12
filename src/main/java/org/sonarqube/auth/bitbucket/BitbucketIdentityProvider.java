@@ -26,14 +26,21 @@ import com.github.scribejava.core.model.Token;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.model.Verifier;
 import com.github.scribejava.core.oauth.OAuthService;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.authentication.Display;
 import org.sonar.api.server.authentication.OAuth2IdentityProvider;
+import org.sonar.api.server.authentication.UnauthorizedException;
 import org.sonar.api.server.authentication.UserIdentity;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+
 
 import static java.lang.String.format;
 
@@ -103,6 +110,22 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
 
     GsonUser gsonUser = requestUser(scribe, accessToken);
     GsonEmails gsonEmails = requestEmails(scribe, accessToken);
+
+    String[] teamsRestriction = settings.teamRestriction();
+    if (teamsRestriction != null && teamsRestriction.length > 0) {
+
+      GsonTeams gsonTeams = requestTeams(scribe, accessToken);
+      if (gsonTeams == null || gsonTeams.getTeams() == null || gsonTeams.getTeams().size() == 0)
+        throw new UnauthorizedException(format("No teams found for current user: %s", gsonUser.getUsername()));
+
+      if (!gsonTeams.getTeams().stream().anyMatch(t -> Arrays.asList(teamsRestriction).contains(t.getUserName()))) {
+          LOGGER.trace(format("User %s is not part of restricted teams: '%s'", gsonUser.getUsername(),
+          Arrays.stream(teamsRestriction).collect(Collectors.joining("', '"))));
+          throw new UnauthorizedException(format("User %s is not part of restricted teams", gsonUser.getUsername()));
+      }
+
+    }
+
     UserIdentity userIdentity = userIdentityFactory.create(gsonUser, gsonEmails);
     context.authenticate(userIdentity);
     context.redirectToRequestedPage();
@@ -129,6 +152,17 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     Response emailsResponse = userRequest.send();
     if (emailsResponse.isSuccessful()) {
       return GsonEmails.parse(emailsResponse.getBody());
+    }
+    return null;
+  }
+
+  @CheckForNull
+  private GsonTeams requestTeams(OAuthService scribe, Token accessToken) {
+    OAuthRequest userRequest = new OAuthRequest(Verb.GET, settings.apiURL() + "2.0/teams?role=member", scribe);
+    scribe.signRequest(accessToken, userRequest);
+    Response teamsResponse = userRequest.send();
+    if (teamsResponse.isSuccessful()) {
+      return GsonTeams.parse(teamsResponse.getBody());
     }
     return null;
   }
