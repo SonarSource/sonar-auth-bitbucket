@@ -22,9 +22,10 @@ package org.sonarqube.auth.bitbucket;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
@@ -34,6 +35,7 @@ import org.junit.rules.ExpectedException;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.server.authentication.OAuth2IdentityProvider;
+import org.sonar.api.server.authentication.UnauthorizedException;
 import org.sonar.api.server.authentication.UserIdentity;
 
 import static java.lang.String.format;
@@ -60,7 +62,7 @@ public class IntegrationTest {
   private BitbucketIdentityProvider underTest = new BitbucketIdentityProvider(bitbucketSettings, userIdentityFactory, scribeApi);
 
   @Before
-  public void enable() {
+  public void setUp() {
     settings.setProperty("sonar.auth.bitbucket.clientId.secured", "the_id");
     settings.setProperty("sonar.auth.bitbucket.clientSecret.secured", "the_secret");
     settings.setProperty("sonar.auth.bitbucket.enabled", true);
@@ -91,12 +93,10 @@ public class IntegrationTest {
    * </ul>
    */
   @Test
-  public void callback_on_successful_authentication() throws IOException, InterruptedException {
+  public void authenticate_successfully() throws Exception {
     bitbucket.enqueue(newSuccessfulAccessTokenResponse());
-    // response of https://api.bitbucket.org/2.0/user
-    bitbucket.enqueue(new MockResponse().setBody("{\"username\":\"john\", \"display_name\":\"John\"}"));
-    // response of https://api.bitbucket.org/2.0/user/emails
-    bitbucket.enqueue(new MockResponse().setBody("{\"values\":[{\"active\": true,\"email\":\"john@bitbucket.org\",\"is_primary\": true}]}"));
+    bitbucket.enqueue(newUserResponse("john", "John"));
+    bitbucket.enqueue(newPrimaryEmailResponse("john@bitbucket.org"));
 
     HttpServletRequest request = newRequest("the-verifier-code");
     DumbCallbackContext callbackContext = new DumbCallbackContext(request);
@@ -110,17 +110,19 @@ public class IntegrationTest {
     assertThat(callbackContext.userIdentity.getEmail()).isEqualTo("john@bitbucket.org");
     assertThat(callbackContext.redirectedToRequestedPage.get()).isTrue();
 
-    // Verify the requests sent to GitHub
+    // Verify the requests sent to Bitbucket
     RecordedRequest accessTokenRequest = bitbucket.takeRequest();
     assertThat(accessTokenRequest.getPath()).startsWith("/site/oauth2/access_token");
     RecordedRequest userRequest = bitbucket.takeRequest();
     assertThat(userRequest.getPath()).startsWith("/2.0/user");
     RecordedRequest emailRequest = bitbucket.takeRequest();
     assertThat(emailRequest.getPath()).startsWith("/2.0/user/emails");
+    // do not request user teams, team restriction is disabled by default
+    assertThat(bitbucket.getRequestCount()).isEqualTo(3);
   }
 
   @Test
-  public void callback_throws_ISE_if_error_when_requesting_user_profile() throws IOException, InterruptedException {
+  public void callback_throws_ISE_if_error_when_requesting_user_profile() {
     bitbucket.enqueue(newSuccessfulAccessTokenResponse());
     // https://api.bitbucket.org/2.0/user fails
     bitbucket.enqueue(new MockResponse().setResponseCode(500).setBody("{error}"));
@@ -135,11 +137,67 @@ public class IntegrationTest {
     assertThat(callbackContext.redirectedToRequestedPage.get()).isFalse();
   }
 
+  @Test
+  public void allow_authentication_if_user_is_member_of_one_restricted_team() {
+    settings.setProperty("sonar.auth.bitbucket.teams", new String[]{"team1", "team2"});
+
+    bitbucket.enqueue(newSuccessfulAccessTokenResponse());
+    bitbucket.enqueue(newUserResponse("john", "John"));
+    bitbucket.enqueue(newPrimaryEmailResponse("john@bitbucket.org"));
+    bitbucket.enqueue(newTeamsResponse("team3", "team2"));
+
+    HttpServletRequest request = newRequest("the-verifier-code");
+    DumbCallbackContext callbackContext = new DumbCallbackContext(request);
+    underTest.callback(callbackContext);
+
+    assertThat(callbackContext.userIdentity.getLogin()).isEqualTo("john@bitbucket");
+    assertThat(callbackContext.redirectedToRequestedPage.get()).isTrue();
+  }
+
+  @Test
+  public void forbid_authentication_if_user_is_not_member_of_one_restricted_team() {
+    settings.setProperty("sonar.auth.bitbucket.teams", new String[]{"team1", "team2"});
+
+    bitbucket.enqueue(newSuccessfulAccessTokenResponse());
+    bitbucket.enqueue(newUserResponse("john", "John"));
+    bitbucket.enqueue(newPrimaryEmailResponse("john@bitbucket.org"));
+    bitbucket.enqueue(newTeamsResponse("team3"));
+
+    expectedException.expect(UnauthorizedException.class);
+
+    DumbCallbackContext context = new DumbCallbackContext(newRequest("the-verifier-code"));
+    underTest.callback(context);
+  }
+
   /**
    * Response sent by Bitbucket to SonarQube when generating an access token
    */
   private static MockResponse newSuccessfulAccessTokenResponse() {
     return new MockResponse().setBody("{\"access_token\":\"e72e16c7e42f292c6912e7710c838347ae178b4a\",\"scope\":\"user\"}");
+  }
+
+  /**
+   * Response of https://api.bitbucket.org/2.0/user
+   */
+  private static MockResponse newUserResponse(String login, String name) {
+    return new MockResponse().setBody("{\"username\":\"" + login + "\", \"display_name\":\"" + name + "\"}");
+  }
+
+  /**
+   * Response of https://api.bitbucket.org/2.0/teams/{username}
+   */
+  private static MockResponse newTeamsResponse(String... teams) {
+    String s = Arrays.stream(teams)
+      .map(team -> "{\"username\":\"" + team + "\"}")
+      .collect(Collectors.joining(","));
+    return new MockResponse().setBody("{\"values\":[" + s + "]}");
+  }
+
+  /**
+   * Response of https://api.bitbucket.org/2.0/user/emails
+   */
+  private static MockResponse newPrimaryEmailResponse(String email) {
+    return new MockResponse().setBody("{\"values\":[{\"active\": true,\"email\":\"" + email + "\",\"is_primary\": true}]}");
   }
 
   private static HttpServletRequest newRequest(String verifierCode) {

@@ -38,6 +38,7 @@ public class BitbucketSettings {
   public static final String CONSUMER_SECRET = "sonar.auth.bitbucket.clientSecret.secured";
   public static final String ENABLED = "sonar.auth.bitbucket.enabled";
   public static final String ALLOW_USERS_TO_SIGN_UP = "sonar.auth.bitbucket.allowUsersToSignUp";
+  public static final String TEAM_RESTRICTION = "sonar.auth.bitbucket.teams";
   public static final String API_URL = "sonar.auth.bitbucket.apiUrl";
   public static final String DEFAULT_API_URL = "https://api.bitbucket.org/";
 
@@ -73,6 +74,10 @@ public class BitbucketSettings {
 
   public boolean allowUsersToSignUp() {
     return settings.getBoolean(ALLOW_USERS_TO_SIGN_UP);
+  }
+
+  public String[] teamRestriction() {
+    return settings.getStringArray(TEAM_RESTRICTION);
   }
 
   public String loginStrategy() {
@@ -137,6 +142,14 @@ public class BitbucketSettings {
         .defaultValue(String.valueOf(true))
         .index(index++)
         .build(),
+      PropertyDefinition.builder(TEAM_RESTRICTION)
+        .name("Teams")
+        .description("Only members of at least one of these teams will be able to authenticate. Keep empty to disable team restriction.")
+        .category(CATEGORY)
+        .subCategory(SUBCATEGORY)
+        .multiValues(true)
+        .index(index++)
+        .build(),
       PropertyDefinition.builder(LOGIN_STRATEGY)
         .name("Login generation strategy")
         .description(format("When the login strategy is set to '%s', the user's login will be auto-generated the first time so that it is unique. " +
@@ -150,8 +163,8 @@ public class BitbucketSettings {
         .index(index++)
         .build(),
       PropertyDefinition.builder(API_URL)
-        .name("Bitbucket Api url")
-        .description("Configurable Bit bucket url.")
+        .name("Bitbucket API URL")
+        .description("Bitbucket API URL. Default is Bitbucket Cloud")
         .category(CATEGORY)
         .subCategory(SUBCATEGORY)
         .defaultValue(DEFAULT_API_URL)

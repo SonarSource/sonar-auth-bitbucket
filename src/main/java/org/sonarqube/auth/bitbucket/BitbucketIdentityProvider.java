@@ -31,11 +31,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.authentication.Display;
 import org.sonar.api.server.authentication.OAuth2IdentityProvider;
+import org.sonar.api.server.authentication.UnauthorizedException;
 import org.sonar.api.server.authentication.UserIdentity;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
 import static java.lang.String.format;
+import static java.util.Arrays.asList;
 
 @ServerSide
 public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
@@ -103,6 +105,9 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
 
     GsonUser gsonUser = requestUser(scribe, accessToken);
     GsonEmails gsonEmails = requestEmails(scribe, accessToken);
+
+    checkTeamRestriction(scribe, accessToken, gsonUser);
+
     UserIdentity userIdentity = userIdentityFactory.create(gsonUser, gsonEmails);
     context.authenticate(userIdentity);
     context.redirectToRequestedPage();
@@ -118,7 +123,6 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
         userResponse.getCode(), userResponse.getBody()));
     }
     String userResponseBody = userResponse.getBody();
-    LOGGER.trace("User response received : %s", userResponseBody);
     return GsonUser.parse(userResponseBody);
   }
 
@@ -130,6 +134,32 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     if (emailsResponse.isSuccessful()) {
       return GsonEmails.parse(emailsResponse.getBody());
     }
+    return null;
+  }
+
+  private void checkTeamRestriction(OAuthService scribe, Token accessToken, GsonUser user) {
+    String[] teamsRestriction = settings.teamRestriction();
+    if (teamsRestriction != null && teamsRestriction.length > 0) {
+      GsonTeams userTeams = requestTeams(scribe, accessToken);
+      if (userTeams == null || userTeams.getTeams() == null || userTeams.getTeams().isEmpty()) {
+        throw new UnauthorizedException(format("No teams found for user %s", user.getUsername()));
+      }
+
+      if (userTeams.getTeams().stream().noneMatch(t -> asList(teamsRestriction).contains(t.getUserName()))) {
+        throw new UnauthorizedException(format("User %s is not part of restricted teams", user.getUsername()));
+      }
+    }
+  }
+
+  @CheckForNull
+  private GsonTeams requestTeams(OAuthService scribe, Token accessToken) {
+    OAuthRequest userRequest = new OAuthRequest(Verb.GET, settings.apiURL() + "2.0/teams?role=member", scribe);
+    scribe.signRequest(accessToken, userRequest);
+    Response teamsResponse = userRequest.send();
+    if (teamsResponse.isSuccessful()) {
+      return GsonTeams.parse(teamsResponse.getBody());
+    }
+    LOGGER.warn("Fail to retrieve the teams of Bitbucket user: {}", teamsResponse.getBody());
     return null;
   }
 
