@@ -163,7 +163,8 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     Response teamsResponse = userRequest.send();
     if (teamsResponse.isSuccessful()) {
       return GsonTeams.parse(teamsResponse.getBody());
-    }
+    } else 
+       LOGGER.warn( format("Error to retrive Bitbucket teams %s", teamsResponse.getBody()));
     return null;
   }
 
