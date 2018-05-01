@@ -71,7 +71,7 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     return Display.builder()
       // URL of src/main/resources/static/bitbucket.svg at runtime
       .setIconPath("/static/authbitbucket/bitbucket.svg")
-      .setBackgroundColor("#205081")
+      .setBackgroundColor("#0052cc")
       .build();
   }
 
