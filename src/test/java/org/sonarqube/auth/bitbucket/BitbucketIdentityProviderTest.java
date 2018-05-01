@@ -48,7 +48,7 @@ public class BitbucketIdentityProviderTest {
     assertThat(underTest.getKey()).isEqualTo("bitbucket");
     assertThat(underTest.getName()).isEqualTo("Bitbucket");
     assertThat(underTest.getDisplay().getIconPath()).isEqualTo("/static/authbitbucket/bitbucket.svg");
-    assertThat(underTest.getDisplay().getBackgroundColor()).isEqualTo("#205081");
+    assertThat(underTest.getDisplay().getBackgroundColor()).isEqualTo("#0052cc");
   }
 
   @Test
