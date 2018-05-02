@@ -1,15 +1,22 @@
 language: java
+install: true
+jdk: oraclejdk8
+sudo: false
+
+git:
+  depth: false  # get full git history for SQ blame info
 
 jdk:
   - oraclejdk8
 
-script: mvn verify -Dmaven.test.redirectTestOutputToFile=false -B -e -V
-
-install: true
-
-sudo: false
+script: "./travis.sh"
 
 cache:
   directories:
     - $HOME/.m2/repository
 
+notifications:
+  email: false
+  webhooks:
+    - secure: "s0lTqPBhA6ltt1c1Y0B/A+o5lENNYtv6YBMeTFIW/3zRMp7ZVB+rQ10KmyZb3aVFe2XHjbd/GPvDfNBwfNkHDqtCHT6Td5dBGV3ztzXKje67xQlOJbVDzQY2v113Fxv2fODRPl75ZkoW0dwlq1hnUPenBjzgQLwH4Dhm83/MhNzWAwQjlITUikr2jFnBRAzodOvtJAJEcObizq5/3Jh+/FT/Onhgt33MdXuGPSAKGpy8vUwrtfac0XL3DqcVqCRbIhaqYc0zWwX38HhYYp+WE6Z3mgbNaB2xhxF5YLjqQFQ74Gg6ggHiK36cDpkoONai7WsHrmMg5qhhUn3RPaiBlmocC+9FOXO99qJDluLk9N9KBkh2Ws3Ks3wlgs0Lrzwx4lZ0fXAEoIjHyY2LBSOvJxCHilzrmXcxRtP4ogIERCzGiuqN1vbzPC4d45q3dKFROLdtW8VG7LvGtOtyRaoqa6sr7SH242EyprE1hGpN3m/ums6Wav+knP+poQJkl5idOZimvTGkab70k9mi7op2zwD0B2ca0klH9Su5E8nu6YGRcSnPmwv99WM0efjhiS3LzgIbIavVbfBWj8OfEfoZ+w1ucSH3ub7NkB860JHVyqQgD6Jsn6jYnRtmFrAAyiEGBWUjI4u8L4rxphRQvlLL/hDWYXavnzngSMBp45T4UbA="
+  on_start: always
