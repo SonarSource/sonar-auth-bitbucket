@@ -30,6 +30,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <gitRepositoryName>sonar-auth-bitbucket</gitRepositoryName>
+    <artifactsToPublish>${project.groupId}:${project.artifactId}:jar</artifactsToPublish>
   </properties>
 
   <scm>
