@@ -1,5 +1,7 @@
 # Bitbucket Authentication Plugin for SonarQube #
 
+[![Build Status](https://api.travis-ci.org/SonarSource/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarSource/sonar-auth-bitbucket) [![Quality gate](https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=alert_status)](https://next.sonarqube.com/sonarqube/dashboard?id=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin) [![Coverage](https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=coverage)](https://next.sonarqube.com/sonarqube/component_measures?id=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=coverage) 
+
 This plugin enables user authentication and Single Sign-On via [Bitbucket](https://bitbucket.org/).
 If you want to analyse Bitbucket Pull Requests you should use [this](https://github.com/AmadeusITGroup/sonar-stash) or [this](https://github.com/mibexsoftware/sonar-bitbucket-plugin) plugin.
 
@@ -39,6 +41,3 @@ sonar.auth.bitbucket.apiUrl|Allows configurable bitbucket api url for pointing i
 # Have question or feedback?
 To provide feedback (request a feature, report a bug etc.) use the [SonarQube Google Group](https://groups.google.com/forum/#!forum/sonarqube). Please do not forget to specify plugin and SonarQube versions if it relates to a bug.
 If you have a question on how to use plugin direct it to [StackOverflow](http://stackoverflow.com/questions/tagged/sonarqube+bitbucket) tagged both `sonarqube` and `bitbucket`.
-
-# Development
-[![Build Status](https://api.travis-ci.org/SonarSource/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarSource/sonar-auth-bitbucket)
