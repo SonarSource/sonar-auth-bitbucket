@@ -4,7 +4,7 @@ This plugin enables user authentication and Single Sign-On via [Bitbucket](https
 If you want to analyse Bitbucket Pull Requests you should use [this](https://github.com/AmadeusITGroup/sonar-stash) or [this](https://github.com/mibexsoftware/sonar-bitbucket-plugin) plugin.
 
 ## Installation ##
-1. Install the plugin through the [Update Center](http://docs.sonarqube.org/display/SONAR/Update+Center) or [download](https://github.com/SonarQubeCommunity/sonar-auth-bitbucket/releases) it into the *SONARQUBE_HOME/extensions/plugins* directory
+1. Install the plugin through the [Update Center](http://docs.sonarqube.org/display/SONAR/Update+Center) or [download](https://github.com/SonarSource/sonar-auth-bitbucket/releases) it into the *SONARQUBE_HOME/extensions/plugins* directory
 1. Restart the SonarQube server
 
 ## Configuration ##
@@ -41,4 +41,4 @@ To provide feedback (request a feature, report a bug etc.) use the [SonarQube Go
 If you have a question on how to use plugin direct it to [StackOverflow](http://stackoverflow.com/questions/tagged/sonarqube+bitbucket) tagged both `sonarqube` and `bitbucket`.
 
 # Development
-[![Build Status](https://api.travis-ci.org/SonarQubeCommunity/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarQubeCommunity/sonar-auth-bitbucket)
+[![Build Status](https://api.travis-ci.org/SonarSource/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarSource/sonar-auth-bitbucket)
