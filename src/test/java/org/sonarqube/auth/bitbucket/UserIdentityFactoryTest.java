@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.server.authentication.UserIdentity;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,8 +34,8 @@ public class UserIdentityFactoryTest {
   @Rule
   public ExpectedException expectedException = ExpectedException.none();
 
-  Settings settings = new Settings(new PropertyDefinitions(BitbucketSettings.definitions()));
-  UserIdentityFactory underTest = new UserIdentityFactory(new BitbucketSettings(settings));
+  private MapSettings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
+  private UserIdentityFactory underTest = new UserIdentityFactory(new BitbucketSettings(settings));
 
   /**
    * Keep the same login as at GitHub
