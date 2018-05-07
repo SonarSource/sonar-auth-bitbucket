@@ -27,18 +27,20 @@ public class GsonUserTest {
 
   @Test
   public void test_getter_and_setter() {
-    GsonUser underTest = new GsonUser("john", "John");
+    GsonUser underTest = new GsonUser("john", "John", "ABCD");
 
     assertThat(underTest.getUsername()).isEqualTo("john");
     assertThat(underTest.getDisplayName()).isEqualTo("John");
+    assertThat(underTest.getAccountId()).isEqualTo("ABCD");
   }
 
   @Test
   public void parse_from_json() {
-    GsonUser underTest = GsonUser.parse("{username:john, display_name:John}");
+    GsonUser underTest = GsonUser.parse("{\"username\":\"john\", \"display_name\":\"John\", \"account_id\":\"ABCD\"}");
 
     assertThat(underTest.getUsername()).isEqualTo("john");
     assertThat(underTest.getDisplayName()).isEqualTo("John");
+    assertThat(underTest.getAccountId()).isEqualTo("ABCD");
   }
 
 }

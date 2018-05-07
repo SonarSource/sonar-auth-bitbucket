@@ -42,28 +42,30 @@ public class UserIdentityFactoryTest {
    */
   @Test
   public void create_login_for_provider_strategy() {
-    GsonUser gson = new GsonUser("john", "John");
+    GsonUser gson = new GsonUser("john", "John", "ABCD");
     settings.setProperty(BitbucketSettings.LOGIN_STRATEGY, BitbucketSettings.LOGIN_STRATEGY_PROVIDER_LOGIN);
     UserIdentity identity = underTest.create(gson, null);
     assertThat(identity.getLogin()).isEqualTo("john");
     assertThat(identity.getName()).isEqualTo("John");
     assertThat(identity.getEmail()).isNull();
+    assertThat(identity.getProviderId()).isEqualTo("ABCD");
   }
 
   @Test
   public void create_login_for_unique_login_strategy() {
-    GsonUser gson = new GsonUser("john", "John");
+    GsonUser gson = new GsonUser("john", "John", "ABCD");
     settings.setProperty(BitbucketSettings.LOGIN_STRATEGY, BitbucketSettings.LOGIN_STRATEGY_UNIQUE);
 
     UserIdentity identity = underTest.create(gson, null);
     assertThat(identity.getLogin()).isEqualTo("john@bitbucket");
     assertThat(identity.getName()).isEqualTo("John");
     assertThat(identity.getEmail()).isNull();
+    assertThat(identity.getProviderId()).isEqualTo("ABCD");
   }
 
   @Test
   public void empty_name_is_replaced_by_provider_login() {
-    GsonUser gson = new GsonUser("john", "");
+    GsonUser gson = new GsonUser("john", "", "ABCD");
 
     UserIdentity identity = underTest.create(gson, null);
     assertThat(identity.getName()).isEqualTo("john");
@@ -71,7 +73,7 @@ public class UserIdentityFactoryTest {
 
   @Test
   public void null_name_is_replaced_by_provider_login() {
-    GsonUser gson = new GsonUser("john", null);
+    GsonUser gson = new GsonUser("john", null, "ABCD");
 
     UserIdentity identity = underTest.create(gson, null);
     assertThat(identity.getName()).isEqualTo("john");
@@ -83,6 +85,6 @@ public class UserIdentityFactoryTest {
 
     expectedException.expect(IllegalStateException.class);
     expectedException.expectMessage("Login strategy not supported : xxx");
-    underTest.create(new GsonUser("john", "john"), null);
+    underTest.create(new GsonUser("john", "john", "ABCD"), null);
   }
 }
