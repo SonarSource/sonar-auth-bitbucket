@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -78,7 +78,7 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     return Display.builder()
       // URL of src/main/resources/static/bitbucket.svg at runtime
       .setIconPath("/static/authbitbucket/bitbucket.svg")
-      .setBackgroundColor("#205081")
+      .setBackgroundColor("#0052cc")
       .build();
   }
 

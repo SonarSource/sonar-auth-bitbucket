@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +20,10 @@
 package org.sonarqube.auth.bitbucket;
 
 import org.junit.Test;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.MapSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.sonarqube.auth.bitbucket.BitbucketSettings.LOGIN_STRATEGY_DEFAULT_VALUE;
@@ -29,9 +31,9 @@ import static org.sonarqube.auth.bitbucket.BitbucketSettings.LOGIN_STRATEGY_PROV
 
 public class BitbucketSettingsTest {
 
-  Settings settings = new Settings(new PropertyDefinitions(BitbucketSettings.definitions()));
+  private Settings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
 
-  BitbucketSettings underTest = new BitbucketSettings(settings);
+  private BitbucketSettings underTest = new BitbucketSettings(settings);
 
   @Test
   public void is_enabled() {

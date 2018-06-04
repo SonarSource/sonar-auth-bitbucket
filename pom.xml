@@ -1,7 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.sonarqube.auth.bitbucket</groupId>
+  <parent>
+    <groupId>org.sonarsource.parent</groupId>
+    <artifactId>parent</artifactId>
+    <version>45</version>
+  </parent>
+
+  <groupId>org.sonarsource.auth.bitbucket</groupId>
   <artifactId>sonar-auth-bitbucket-plugin</artifactId>
   <version>1.1-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
@@ -24,18 +30,20 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <gitRepositoryName>sonar-auth-bitbucket</gitRepositoryName>
+    <artifactsToPublish>${project.groupId}:${project.artifactId}:jar</artifactsToPublish>
   </properties>
 
   <scm>
-    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-auth-bitbucket.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-auth-bitbucket.git</developerConnection>
-    <url>https://github.com/SonarQubeCommunity/sonar-auth-bitbucket</url>
+    <connection>scm:git:git@github.com:SonarSource/sonar-auth-bitbucket.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarSource/sonar-auth-bitbucket.git</developerConnection>
+    <url>https://github.com/SonarSource/sonar-auth-bitbucket</url>
     <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
     <system>GitHub Issues</system>
-    <url>https://github.com/SonarQubeCommunity/sonar-auth-bitbucket/issues</url>
+    <url>https://github.com/SonarSource/sonar-auth-bitbucket/issues</url>
   </issueManagement>
 
   <developers>
@@ -50,7 +58,7 @@
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>5.5</version>
+      <version>7.2.0.12315</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

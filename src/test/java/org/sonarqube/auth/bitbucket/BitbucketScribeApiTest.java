@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,13 +23,13 @@ import com.github.scribejava.core.extractors.JsonTokenExtractor;
 import com.github.scribejava.core.model.OAuthConfig;
 import com.github.scribejava.core.model.Verb;
 import org.junit.Test;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.MapSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BitbucketScribeApiTest {
 
-  BitbucketScribeApi underTest = new BitbucketScribeApi(new BitbucketSettings(new Settings()));
+  private BitbucketScribeApi underTest = new BitbucketScribeApi(new BitbucketSettings(new MapSettings()));
 
   @Test
   public void getAccessTokenEndpoint() {
@@ -45,13 +45,11 @@ public class BitbucketScribeApiTest {
   public void getAuthorizationUrl() {
     OAuthConfig oAuthConfig = new OAuthConfig("key", null, "callback", null, "the-scope", null, null, null, null);
     assertThat(underTest.getAuthorizationUrl(oAuthConfig)).isEqualTo(
-      "https://bitbucket.org/site/oauth2/authorize?response_type=code&client_id=key&redirect_uri=callback&scope=the-scope"
-      );
+      "https://bitbucket.org/site/oauth2/authorize?response_type=code&client_id=key&redirect_uri=callback&scope=the-scope");
 
     oAuthConfig = new OAuthConfig("key", null, "callback", null, "the-scope", null, null, null, null);
     assertThat(underTest.getAuthorizationUrl(oAuthConfig)).isEqualTo(
-      "https://bitbucket.org/site/oauth2/authorize?response_type=code&client_id=key&redirect_uri=callback&scope=the-scope"
-      );
+      "https://bitbucket.org/site/oauth2/authorize?response_type=code&client_id=key&redirect_uri=callback&scope=the-scope");
   }
 
   @Test

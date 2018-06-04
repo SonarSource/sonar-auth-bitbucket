@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -34,15 +34,19 @@ public class GsonUser {
   @SerializedName("display_name")
   private String displayName;
 
+  @SerializedName("account_id")
+  private String accountId;
+
   public GsonUser() {
     // even if empty constructor is not required for Gson, it is strongly
     // recommended:
     // http://stackoverflow.com/a/18645370/229031
   }
 
-  GsonUser(String username, @Nullable  String displayName) {
+  GsonUser(String username, @Nullable  String displayName, String accountId) {
     this.username = username;
     this.displayName = displayName;
+    this.accountId = accountId;
   }
 
   public String getUsername() {
@@ -52,6 +56,10 @@ public class GsonUser {
   @CheckForNull
   public String getDisplayName() {
     return displayName;
+  }
+
+  public String getAccountId() {
+    return accountId;
   }
 
   public static GsonUser parse(String json) {

@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.sonar.api.config.PropertyDefinitions;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.server.authentication.OAuth2IdentityProvider;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,18 +37,18 @@ public class BitbucketIdentityProviderTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  Settings settings = new Settings(new PropertyDefinitions(BitbucketSettings.definitions()));
-  BitbucketSettings bitbucketSettings = new BitbucketSettings(settings);
-  UserIdentityFactory userIdentityFactory = mock(UserIdentityFactory.class);
-  BitbucketScribeApi scribeApi = new BitbucketScribeApi(bitbucketSettings);
-  BitbucketIdentityProvider underTest = new BitbucketIdentityProvider(bitbucketSettings, userIdentityFactory, scribeApi);
+  private MapSettings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
+  private BitbucketSettings bitbucketSettings = new BitbucketSettings(settings);
+  private UserIdentityFactory userIdentityFactory = mock(UserIdentityFactory.class);
+  private BitbucketScribeApi scribeApi = new BitbucketScribeApi(bitbucketSettings);
+  private BitbucketIdentityProvider underTest = new BitbucketIdentityProvider(bitbucketSettings, userIdentityFactory, scribeApi);
 
   @Test
   public void check_fields() {
     assertThat(underTest.getKey()).isEqualTo("bitbucket");
     assertThat(underTest.getName()).isEqualTo("Bitbucket");
     assertThat(underTest.getDisplay().getIconPath()).isEqualTo("/static/authbitbucket/bitbucket.svg");
-    assertThat(underTest.getDisplay().getBackgroundColor()).isEqualTo("#205081");
+    assertThat(underTest.getDisplay().getBackgroundColor()).isEqualTo("#0052cc");
   }
 
   @Test

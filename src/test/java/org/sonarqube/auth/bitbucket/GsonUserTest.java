@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,18 +27,20 @@ public class GsonUserTest {
 
   @Test
   public void test_getter_and_setter() {
-    GsonUser underTest = new GsonUser("john", "John");
+    GsonUser underTest = new GsonUser("john", "John", "ABCD");
 
     assertThat(underTest.getUsername()).isEqualTo("john");
     assertThat(underTest.getDisplayName()).isEqualTo("John");
+    assertThat(underTest.getAccountId()).isEqualTo("ABCD");
   }
 
   @Test
   public void parse_from_json() {
-    GsonUser underTest = GsonUser.parse("{username:john, display_name:John}");
+    GsonUser underTest = GsonUser.parse("{\"username\":\"john\", \"display_name\":\"John\", \"account_id\":\"ABCD\"}");
 
     assertThat(underTest.getUsername()).isEqualTo("john");
     assertThat(underTest.getDisplayName()).isEqualTo("John");
+    assertThat(underTest.getAccountId()).isEqualTo("ABCD");
   }
 
 }
