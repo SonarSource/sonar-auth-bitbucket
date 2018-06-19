@@ -20,16 +20,24 @@
 package org.sonarqube.auth.bitbucket;
 
 import org.junit.Test;
+import org.sonar.api.Plugin;
+import org.sonar.api.SonarQubeSide;
+import org.sonar.api.internal.PluginContextImpl;
+import org.sonar.api.internal.SonarRuntimeImpl;
+import org.sonar.api.utils.Version;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthBitbucketPluginTest {
-
+  Plugin.Context context = new PluginContextImpl.Builder()
+    .setSonarRuntime(SonarRuntimeImpl.forSonarQube(Version.create(6, 7), SonarQubeSide.SERVER))
+    .build();
   AuthBitbucketPlugin underTest = new AuthBitbucketPlugin();
 
   @Test
   public void test_extensions() {
-    assertThat(underTest.getExtensions()).hasSize(10);
+    underTest.define(context);
+    assertThat(context.getExtensions()).hasSize(10);
   }
 
 }
