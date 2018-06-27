@@ -1,7 +1,7 @@
 /*
  * Bitbucket Authentication for SonarQube
- * Copyright (C) 2016-2016 SonarSource SA
- * mailto:contact AT sonarsource DOT com
+ * Copyright (C) 2016-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,34 +27,28 @@ import javax.annotation.Nullable;
  */
 public class GsonTeam {
 
-    @SerializedName("username")
-    private String userName;
+  @SerializedName("username")
+  private String userName;
 
-    @SerializedName("display_name")
-    private String displayName;
+  @SerializedName("display_name")
+  private String displayName;
 
-    public GsonTeam() {
-        // even if empty constructor is not required for Gson, it is strongly
-        // recommended:
-        // http://stackoverflow.com/a/18645370/229031
-    }
+  public GsonTeam() {
+      // even if empty constructor is not required for Gson, it is strongly
+      // recommended:
+      // http://stackoverflow.com/a/18645370/229031
+  }
 
-    GsonTeam(String username, @Nullable  String displayName) {
-        this.userName = username;
-        this.displayName = displayName;
-    }
+  GsonTeam(String username, @Nullable String displayName) {
+      this.userName = username;
+      this.displayName = displayName;
+  }
 
-    /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+      return userName;
+  }
 
-    /**
-     * @return the displayName
-     */
-    public String getDisplayName() {
-        return displayName;
-    }
+  public String getDisplayName() {
+      return displayName;
+  }
 }

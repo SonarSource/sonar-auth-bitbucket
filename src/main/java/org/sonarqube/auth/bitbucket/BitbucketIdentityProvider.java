@@ -111,6 +111,15 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     GsonUser gsonUser = requestUser(scribe, accessToken);
     GsonEmails gsonEmails = requestEmails(scribe, accessToken);
 
+    checkTeamRestriction(scribe, accessToken,gsonUser);
+
+    UserIdentity userIdentity = userIdentityFactory.create(gsonUser, gsonEmails);
+    context.authenticate(userIdentity);
+    context.redirectToRequestedPage();
+  }
+
+  private void checkTeamRestriction(OAuthService scribe,Token accessToken,GsonUser gsonUser) {
+
     String[] teamsRestriction = settings.teamRestriction();
     if (teamsRestriction != null && teamsRestriction.length > 0) {
 
@@ -119,16 +128,12 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
         throw new UnauthorizedException(format("No teams found for current user: %s", gsonUser.getUsername()));
 
       if (!gsonTeams.getTeams().stream().anyMatch(t -> Arrays.asList(teamsRestriction).contains(t.getUserName()))) {
-          LOGGER.trace(format("User %s is not part of restricted teams: '%s'", gsonUser.getUsername(),
+          LOGGER.debug(format("User %s is not part of restricted teams: '%s'", gsonUser.getUsername(),
           Arrays.stream(teamsRestriction).collect(Collectors.joining("', '"))));
           throw new UnauthorizedException(format("User %s is not part of restricted teams", gsonUser.getUsername()));
       }
 
     }
-
-    UserIdentity userIdentity = userIdentityFactory.create(gsonUser, gsonEmails);
-    context.authenticate(userIdentity);
-    context.redirectToRequestedPage();
   }
 
   private GsonUser requestUser(OAuthService scribe, Token accessToken) {
@@ -163,8 +168,9 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     Response teamsResponse = userRequest.send();
     if (teamsResponse.isSuccessful()) {
       return GsonTeams.parse(teamsResponse.getBody());
-    } else 
+    } else {
        LOGGER.warn( format("Error to retrive Bitbucket teams %s", teamsResponse.getBody()));
+    }
     return null;
   }
 
