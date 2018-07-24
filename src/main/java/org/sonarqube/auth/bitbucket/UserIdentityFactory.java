@@ -48,7 +48,7 @@ public class UserIdentityFactory {
 
   private UserIdentity.Builder builder(GsonUser gsonUser) {
     return UserIdentity.builder()
-      .setProviderId(gsonUser.getAccountId())
+      .setProviderId(gsonUser.getUuid())
       .setProviderLogin(gsonUser.getUsername())
       .setLogin(generateLogin(gsonUser))
       .setName(generateName(gsonUser));

@@ -34,8 +34,8 @@ public class GsonUser {
   @SerializedName("display_name")
   private String displayName;
 
-  @SerializedName("account_id")
-  private String accountId;
+  @SerializedName("uuid")
+  private String uuid;
 
   public GsonUser() {
     // even if empty constructor is not required for Gson, it is strongly
@@ -43,10 +43,10 @@ public class GsonUser {
     // http://stackoverflow.com/a/18645370/229031
   }
 
-  GsonUser(String username, @Nullable  String displayName, String accountId) {
+  GsonUser(String username, @Nullable  String displayName, String uuid) {
     this.username = username;
     this.displayName = displayName;
-    this.accountId = accountId;
+    this.uuid = uuid;
   }
 
   public String getUsername() {
@@ -58,8 +58,8 @@ public class GsonUser {
     return displayName;
   }
 
-  public String getAccountId() {
-    return accountId;
+  public String getUuid() {
+    return uuid;
   }
 
   public static GsonUser parse(String json) {

@@ -31,16 +31,16 @@ public class GsonUserTest {
 
     assertThat(underTest.getUsername()).isEqualTo("john");
     assertThat(underTest.getDisplayName()).isEqualTo("John");
-    assertThat(underTest.getAccountId()).isEqualTo("ABCD");
+    assertThat(underTest.getUuid()).isEqualTo("ABCD");
   }
 
   @Test
   public void parse_from_json() {
-    GsonUser underTest = GsonUser.parse("{\"username\":\"john\", \"display_name\":\"John\", \"account_id\":\"ABCD\"}");
+    GsonUser underTest = GsonUser.parse("{\"username\":\"john\", \"display_name\":\"John\", \"uuid\":\"ABCD\"}");
 
     assertThat(underTest.getUsername()).isEqualTo("john");
     assertThat(underTest.getDisplayName()).isEqualTo("John");
-    assertThat(underTest.getAccountId()).isEqualTo("ABCD");
+    assertThat(underTest.getUuid()).isEqualTo("ABCD");
   }
 
 }
