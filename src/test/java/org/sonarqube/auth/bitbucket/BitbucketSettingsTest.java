@@ -20,7 +20,6 @@
 package org.sonarqube.auth.bitbucket;
 
 import org.junit.Test;
-import org.sonar.api.config.Configuration;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.Settings;
 import org.sonar.api.config.internal.MapSettings;
@@ -101,7 +100,7 @@ public class BitbucketSettingsTest {
   }
 
   @Test
-  public void configure_api_Url() throws Exception {
+  public void configure_api_Url() {
     final String configuredApiUrl = "https://test-company.api.bitbucket.org/";
 
     settings.setProperty("sonar.auth.bitbucket.apiUrl", configuredApiUrl);
