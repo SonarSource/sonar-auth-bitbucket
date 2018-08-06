@@ -42,8 +42,8 @@
   </scm>
 
   <issueManagement>
-    <system>GitHub Issues</system>
-    <url>https://github.com/SonarSource/sonar-auth-bitbucket/issues</url>
+    <system>JIRA</system>
+    <url>https://jira.sonarsource.com/browse/AUTHBB/</url>
   </issueManagement>
 
   <developers>
