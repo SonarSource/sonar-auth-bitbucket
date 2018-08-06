@@ -19,25 +19,29 @@
  */
 package org.sonarqube.auth.bitbucket;
 
-import org.junit.Test;
-import org.sonar.api.Plugin;
-import org.sonar.api.SonarQubeSide;
-import org.sonar.api.internal.PluginContextImpl;
-import org.sonar.api.internal.SonarRuntimeImpl;
-import org.sonar.api.utils.Version;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
-import static org.assertj.core.api.Assertions.assertThat;
+/**
+ * Lite representation of JSON response of GET https://api.bitbucket.org/2.0/teams
+ */
+public class GsonTeams {
 
-public class AuthBitbucketPluginTest {
-  Plugin.Context context = new PluginContextImpl.Builder()
-    .setSonarRuntime(SonarRuntimeImpl.forSonarQube(Version.create(6, 7), SonarQubeSide.SERVER))
-    .build();
-  AuthBitbucketPlugin underTest = new AuthBitbucketPlugin();
+    @SerializedName("values")
+    private List<GsonTeam> teams;
 
-  @Test
-  public void test_extensions() {
-    underTest.define(context);
-    assertThat(context.getExtensions()).hasSize(11);
-  }
 
+    /**
+     * @return the teams
+     */
+    public List<GsonTeam> getTeams() {
+        return teams;
+    }
+
+    public static GsonTeams parse(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, GsonTeams.class);
+    }
+  
 }
