@@ -141,11 +141,7 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
     String[] teamsRestriction = settings.teamRestriction();
     if (teamsRestriction != null && teamsRestriction.length > 0) {
       GsonTeams userTeams = requestTeams(scribe, accessToken);
-      if (userTeams == null || userTeams.getTeams() == null || userTeams.getTeams().isEmpty()) {
-        throw new UnauthorizedException(format("No teams found for user %s", user.getUsername()));
-      }
-
-      if (userTeams.getTeams().stream().noneMatch(t -> asList(teamsRestriction).contains(t.getUserName()))) {
+      if (userTeams == null || userTeams.getTeams() == null || userTeams.getTeams().stream().noneMatch(t -> asList(teamsRestriction).contains(t.getUserName()))) {
         throw new UnauthorizedException(format("User %s is not part of restricted teams", user.getUsername()));
       }
     }

@@ -169,6 +169,21 @@ public class IntegrationTest {
     underTest.callback(context);
   }
 
+  @Test
+  public void forbid_authentication_if_user_is_not_member_of_any_team() {
+    settings.setProperty("sonar.auth.bitbucket.teams", new String[]{"team1", "team2"});
+
+    bitbucket.enqueue(newSuccessfulAccessTokenResponse());
+    bitbucket.enqueue(newUserResponse("john", "John"));
+    bitbucket.enqueue(newPrimaryEmailResponse("john@bitbucket.org"));
+    bitbucket.enqueue(newTeamsResponse(/* no teams */));
+
+    expectedException.expect(UnauthorizedException.class);
+
+    DumbCallbackContext context = new DumbCallbackContext(newRequest("the-verifier-code"));
+    underTest.callback(context);
+  }
+
   /**
    * Response sent by Bitbucket to SonarQube when generating an access token
    */
