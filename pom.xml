@@ -9,7 +9,7 @@
 
   <groupId>org.sonarsource.auth.bitbucket</groupId>
   <artifactId>sonar-auth-bitbucket-plugin</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
   <name>Bitbucket Authentication for SonarQube</name>
   <description>Bitbucket Authentication for SonarQube</description>
