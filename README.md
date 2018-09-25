@@ -14,7 +14,7 @@ Plugin | Requires SonarQube | Features
  1.1   | 7.2 or greater     | ~~Support of Bitbucket Enterprise~~ (buggy, see [AUTHBB-1](https://jira.sonarsource.com/browse/AUTHBB-1)), team restriction, account renaming
 
 ## Installation ##
-1. Install the plugin through the [Marketplace](https://docs.sonarqube.org/display/SONAR/Marketplace) or [download](https://sonarsource.bintray.com/Distribution/sonar-auth-bitbucket-plugin/) it into the *SONARQUBE_HOME/extensions/plugins* directory
+1. Install the plugin through the [Marketplace](https://docs.sonarqube.org/display/SONAR/Marketplace) or [download](https://binaries.sonarsource.com/Distribution/sonar-auth-bitbucket-plugin/) it into the *SONARQUBE_HOME/extensions/plugins* directory
 2. Restart the SonarQube server
 
 ## Configuration ##
@@ -55,7 +55,7 @@ Login generation strategy|When the login strategy is set to 'Unique', the user's
 To ask questions or provide feedback (request a feature, report a bug etc.), use the [SonarSource forum](https://community.sonarsource.com/) with the tag `bitbucket`. Please do not forget to specify versions of plugin and SonarQube if the question relates to a bug.
 
 # Links
-* [Downloads](https://sonarsource.bintray.com/Distribution/sonar-auth-bitbucket-plugin/)
+* [Downloads](https://binaries.sonarsource.com/Distribution/sonar-auth-bitbucket-plugin/)
 * [Tickets](https://jira.sonarsource.com/browse/AUTHBB)
  
 # License
