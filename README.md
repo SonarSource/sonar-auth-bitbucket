@@ -24,7 +24,9 @@ Plugin | Requires SonarQube | Features
    * Name : Something like "My SonarQube"
    * URL : the SonarQube base URL, for example `http://my_server`
    * Callback URL : the SonarQube base URL suffixed with `/oauth2/callback`, for example `http://my_server/oauth2/callback` 
-   * Permissions : Check "Account -> Read" (Email will be automatically selected)
+   * Permissions
+       * Check "Account -> Read" (Email will be automatically selected)
+       * Check "Team membership -> Read"
    * Save. The generated key and secret are displayed when selecting the consumer.
 2. In SonarQube:
    * Go to "Administration" -> "Configuration" -> "General Settings" -> "Security" -> "Bitbucket"
