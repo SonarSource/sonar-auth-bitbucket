@@ -149,7 +149,7 @@ public class BitbucketIdentityProvider implements OAuth2IdentityProvider {
 
   @CheckForNull
   private GsonTeams requestTeams(OAuthService scribe, Token accessToken) {
-    OAuthRequest userRequest = new OAuthRequest(Verb.GET, settings.apiURL() + "2.0/teams?role=member", scribe);
+    OAuthRequest userRequest = new OAuthRequest(Verb.GET, settings.apiURL() + "2.0/teams?role=member&pagelen=100", scribe);
     scribe.signRequest(accessToken, userRequest);
     Response teamsResponse = userRequest.send();
     if (teamsResponse.isSuccessful()) {
