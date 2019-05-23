@@ -5,19 +5,22 @@
 This plugin enables user authentication via [Bitbucket](https://bitbucket.org/). 
 Both [Bitbucket Cloud](https://bitbucket.org) and Bitbucket Enterprise (Server/Data Center) are supported. 
 
-If you want to analyse Bitbucket Pull Requests you should use [this](https://github.com/AmadeusITGroup/sonar-stash) or [this](https://github.com/mibexsoftware/sonar-bitbucket-plugin) plugin.
+If you want to analyse Bitbucket Pull Requests you can use [AmadeusITGroup/sonar-stash](https://github.com/AmadeusITGroup/sonar-stash) or [mibexsoftware/sonar-bitbucket-plugin](https://github.com/mibexsoftware/sonar-bitbucket-plugin) plugin.
 
 ## Features
+
 Plugin | Requires SonarQube | Features
 ------ | ------------------ | --------
  1.0   | 6.7 or greater     | Authentication, Single Sign-On
  1.1   | 7.2 or greater     | ~~Support of Bitbucket Enterprise~~ (buggy, see [AUTHBB-1](https://jira.sonarsource.com/browse/AUTHBB-1)), team restriction, account renaming
 
-## Installation ##
+## Installation
+
 1. Install the plugin through the [Marketplace](https://docs.sonarqube.org/display/SONAR/Marketplace) or [download](https://binaries.sonarsource.com/Distribution/sonar-auth-bitbucket-plugin/) it into the *SONARQUBE_HOME/extensions/plugins* directory
 2. Restart the SonarQube server
 
-## Configuration ##
+## Configuration
+
 1. In Bitbucket, create a OAuth consumer:
    * Click on your account avatar in the bottom left corner and select Settings.
    * Click on "Access Management" -> "OAuth consumers" -> "Add consumer"
@@ -38,7 +41,7 @@ Plugin | Requires SonarQube | Features
 > * Set the SonarQube property "Administration" -> "Configuration" -> "General" -> "Server base URL", for example `https://my_server`
 > * Use `https://` URLs in settings of OAuth consumer in Bitbucket.
 
-## General Configuration ##
+## General Configuration
 
 Property | Description | Default value
 ---------| ----------- | -------------
@@ -50,15 +53,16 @@ Bitbucket API URL|~~Base URL of the Bitbucket server. Used to connect to Bitbuck
 Teams|Users must be members of at least one team in order to be able to authenticate.|None (team restriction is disabled) 
 Login generation strategy|When the login strategy is set to 'Unique', the user's login will be auto-generated the first time so that it is unique. When the login strategy is set to 'Same as Bitbucket login', the user's login will be the Bitbucket login. This last strategy allows, when changing the authentication provider, to keep existing users (if logins from new provider are the same than Bitbucket)|Unique
 
-# Have question or feedback?
+## Have question or feedback?
 
 To ask questions or provide feedback (request a feature, report a bug etc.), use the [SonarSource forum](https://community.sonarsource.com/) with the tag `bitbucket`. Please do not forget to specify versions of plugin and SonarQube if the question relates to a bug.
 
-# Links
+## Links
+
 * [Downloads](https://binaries.sonarsource.com/Distribution/sonar-auth-bitbucket-plugin/)
 * [Tickets](https://jira.sonarsource.com/browse/AUTHBB)
  
-# License
+## License
 
 Copyright 2016-2018 SonarSource.
 
