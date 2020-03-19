@@ -21,11 +21,11 @@ package org.sonarqube.auth.bitbucket;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.annotation.CheckForNull;
-
 import org.sonar.api.PropertyType;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.config.PropertyDefinition;
-import org.sonar.api.config.Settings;
 import org.sonar.api.server.ServerSide;
 
 import static java.lang.String.format;
@@ -34,6 +34,7 @@ import static org.sonar.api.PropertyType.SINGLE_SELECT_LIST;
 @ServerSide
 public class BitbucketSettings {
 
+  private static final Supplier<? extends IllegalStateException> DEFAULT_VALUE_MISSING = () -> new IllegalStateException("Should have a default value");
   public static final String CONSUMER_KEY = "sonar.auth.bitbucket.clientId.secured";
   public static final String CONSUMER_SECRET = "sonar.auth.bitbucket.clientSecret.secured";
   public static final String ENABLED = "sonar.auth.bitbucket.enabled";
@@ -52,51 +53,45 @@ public class BitbucketSettings {
   public static final String CATEGORY = "security";
   public static final String SUBCATEGORY = "bitbucket";
 
-  private final Settings settings;
+  private final Configuration config;
 
-  public BitbucketSettings(Settings settings) {
-    this.settings = settings;
+  public BitbucketSettings(Configuration config) {
+    this.config = config;
   }
 
   @CheckForNull
   public String clientId() {
-    return settings.getString(CONSUMER_KEY);
+    return config.get(CONSUMER_KEY).orElse(null);
   }
 
   @CheckForNull
   public String clientSecret() {
-    return settings.getString(CONSUMER_SECRET);
+    return config.get(CONSUMER_SECRET).orElse(null);
   }
 
   public boolean isEnabled() {
-    return settings.getBoolean(ENABLED) && clientId() != null && clientSecret() != null;
+    return config.getBoolean(ENABLED).orElseThrow(DEFAULT_VALUE_MISSING) && clientId() != null && clientSecret() != null;
   }
 
   public boolean allowUsersToSignUp() {
-    return settings.getBoolean(ALLOW_USERS_TO_SIGN_UP);
+    return config.getBoolean(ALLOW_USERS_TO_SIGN_UP).orElseThrow(DEFAULT_VALUE_MISSING);
   }
 
   public String[] teamRestriction() {
-    return settings.getStringArray(TEAM_RESTRICTION);
+    return config.getStringArray(TEAM_RESTRICTION);
   }
 
   public String loginStrategy() {
-    return settings.getString(LOGIN_STRATEGY);
+    return config.get(LOGIN_STRATEGY).orElseThrow(DEFAULT_VALUE_MISSING);
   }
 
   public String webURL() {
-    String url = settings.getString(WEB_URL);
-    if (url == null) {
-      url = DEFAULT_WEB_URL;
-    }
+    String url = config.get(WEB_URL).orElse(DEFAULT_WEB_URL);
     return urlWithEndingSlash(url);
   }
 
   public String apiURL() {
-    String url = settings.getString(API_URL);
-    if (url == null) {
-      url = DEFAULT_API_URL;
-    }
+    String url = config.get(API_URL).orElse(DEFAULT_API_URL);
     return urlWithEndingSlash(url);
   }
 

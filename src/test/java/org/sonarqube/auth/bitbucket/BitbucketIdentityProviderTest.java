@@ -38,7 +38,7 @@ public class BitbucketIdentityProviderTest {
   public ExpectedException thrown = ExpectedException.none();
 
   private MapSettings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
-  private BitbucketSettings bitbucketSettings = new BitbucketSettings(settings);
+  private BitbucketSettings bitbucketSettings = new BitbucketSettings(settings.asConfig());
   private UserIdentityFactory userIdentityFactory = mock(UserIdentityFactory.class);
   private BitbucketScribeApi scribeApi = new BitbucketScribeApi(bitbucketSettings);
   private BitbucketIdentityProvider underTest = new BitbucketIdentityProvider(bitbucketSettings, userIdentityFactory, scribeApi);

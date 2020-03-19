@@ -56,7 +56,7 @@ public class IntegrationTest {
 
   // load settings with default values
   private MapSettings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
-  private BitbucketSettings bitbucketSettings = new BitbucketSettings(settings);
+  private BitbucketSettings bitbucketSettings = new BitbucketSettings(settings.asConfig());
   private UserIdentityFactory userIdentityFactory = new UserIdentityFactory(bitbucketSettings);
   private BitbucketScribeApi scribeApi = new BitbucketScribeApi(bitbucketSettings);
   private BitbucketIdentityProvider underTest = new BitbucketIdentityProvider(bitbucketSettings, userIdentityFactory, scribeApi);
@@ -139,7 +139,7 @@ public class IntegrationTest {
 
   @Test
   public void allow_authentication_if_user_is_member_of_one_restricted_team() {
-    settings.setProperty("sonar.auth.bitbucket.teams", new String[]{"team1", "team2"});
+    settings.setProperty("sonar.auth.bitbucket.teams", new String[] {"team1", "team2"});
 
     bitbucket.enqueue(newSuccessfulAccessTokenResponse());
     bitbucket.enqueue(newUserResponse("john", "John"));
@@ -156,7 +156,7 @@ public class IntegrationTest {
 
   @Test
   public void forbid_authentication_if_user_is_not_member_of_one_restricted_team() {
-    settings.setProperty("sonar.auth.bitbucket.teams", new String[]{"team1", "team2"});
+    settings.setProperty("sonar.auth.bitbucket.teams", new String[] {"team1", "team2"});
 
     bitbucket.enqueue(newSuccessfulAccessTokenResponse());
     bitbucket.enqueue(newUserResponse("john", "John"));
@@ -171,7 +171,7 @@ public class IntegrationTest {
 
   @Test
   public void forbid_authentication_if_user_is_not_member_of_any_team() {
-    settings.setProperty("sonar.auth.bitbucket.teams", new String[]{"team1", "team2"});
+    settings.setProperty("sonar.auth.bitbucket.teams", new String[] {"team1", "team2"});
 
     bitbucket.enqueue(newSuccessfulAccessTokenResponse());
     bitbucket.enqueue(newUserResponse("john", "John"));

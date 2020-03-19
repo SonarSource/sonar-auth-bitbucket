@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BitbucketScribeApiTest {
 
-  private BitbucketScribeApi underTest = new BitbucketScribeApi(new BitbucketSettings(new MapSettings()));
+  private BitbucketScribeApi underTest = new BitbucketScribeApi(new BitbucketSettings(new MapSettings().asConfig()));
 
   @Test
   public void getAccessTokenEndpoint() {
