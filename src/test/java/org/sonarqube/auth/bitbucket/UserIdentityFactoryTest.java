@@ -34,7 +34,7 @@ public class UserIdentityFactoryTest {
   public ExpectedException expectedException = ExpectedException.none();
 
   private MapSettings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
-  private UserIdentityFactory underTest = new UserIdentityFactory(new BitbucketSettings(settings));
+  private UserIdentityFactory underTest = new UserIdentityFactory(new BitbucketSettings(settings.asConfig()));
 
   /**
    * Keep the same login as at GitHub

@@ -21,7 +21,6 @@ package org.sonarqube.auth.bitbucket;
 
 import org.junit.Test;
 import org.sonar.api.config.PropertyDefinitions;
-import org.sonar.api.config.Settings;
 import org.sonar.api.config.internal.MapSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,9 +29,9 @@ import static org.sonarqube.auth.bitbucket.BitbucketSettings.LOGIN_STRATEGY_PROV
 
 public class BitbucketSettingsTest {
 
-  private Settings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
+  private MapSettings settings = new MapSettings(new PropertyDefinitions(BitbucketSettings.definitions()));
 
-  private BitbucketSettings underTest = new BitbucketSettings(settings);
+  private BitbucketSettings underTest = new BitbucketSettings(settings.asConfig());
 
   @Test
   public void is_enabled() {
