@@ -3,7 +3,7 @@
 [![Build Status](https://api.travis-ci.org/SonarSource/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarSource/sonar-auth-bitbucket) [![Quality gate](https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=alert_status)](https://next.sonarqube.com/sonarqube/dashboard?id=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin) [![Coverage](https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=coverage)](https://next.sonarqube.com/sonarqube/component_measures?id=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=coverage) 
 
 This plugin enables user authentication via [Bitbucket](https://bitbucket.org/). 
-Both [Bitbucket Cloud](https://bitbucket.org) and Bitbucket Enterprise (Server/Data Center) are supported. 
+Only [Bitbucket Cloud](https://bitbucket.org) is supported. 
 
 If you want to analyse Bitbucket Pull Requests you can use [AmadeusITGroup/sonar-stash](https://github.com/AmadeusITGroup/sonar-stash) or [mibexsoftware/sonar-bitbucket-plugin](https://github.com/mibexsoftware/sonar-bitbucket-plugin) plugin.
 
