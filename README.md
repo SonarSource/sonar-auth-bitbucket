@@ -2,6 +2,8 @@
 
 [![Build Status](https://api.travis-ci.org/SonarSource/sonar-auth-bitbucket.svg)](https://travis-ci.org/SonarSource/sonar-auth-bitbucket) [![Quality gate](https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=alert_status)](https://next.sonarqube.com/sonarqube/dashboard?id=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin) [![Coverage](https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=coverage)](https://next.sonarqube.com/sonarqube/component_measures?id=org.sonarsource.auth.bitbucket%3Asonar-auth-bitbucket-plugin&metric=coverage) 
 
+## Note : This plugin is compatible with SonarQube up to 9.1, and won't be compatible with the next SonarQube versions as it's now a built-in feature of SonarQube 9.2 and later.
+
 This plugin enables user authentication via [Bitbucket](https://bitbucket.org/). 
 Only [Bitbucket Cloud](https://bitbucket.org) is supported. 
 
